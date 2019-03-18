@@ -21,7 +21,7 @@
 /target
 
 # Beans
-/src/main/java/beans/
+#/src/main/java/beans/
 
 # Build
 /build
