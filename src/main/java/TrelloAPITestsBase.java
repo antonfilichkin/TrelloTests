@@ -4,8 +4,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import static API.ResponseSpecifications.successResponse;
-import static defaultTestData.BoardData.TEST_BOARD_DESCRIPTION;
-import static defaultTestData.BoardData.TEST_BOARD_NAME;
+import static defaultTestName.BoardData.TEST_BOARD_DESCRIPTION;
+import static defaultTestName.BoardData.TEST_BOARD_NAME;
 import static enums.Backgrounds.ORANGE;
 import static enums.QueryParams.DESC;
 import static enums.QueryParams.PREFS_BACKGROUND;
@@ -19,7 +19,7 @@ public class TrelloAPITestsBase {
     String boardName;
     String boardId;
 
-    @BeforeMethod(description = "Creation of new board for test")
+    @BeforeMethod(description = "Create new board for test")
     public void createBoardForTest() {
         // Generating board Name and description
         int randomNumber = Integer.parseInt(random(5, false, true));
@@ -41,7 +41,7 @@ public class TrelloAPITestsBase {
         boardId = deserializeResponse(response, Board.class).getId();
     }
 
-    @AfterMethod(description = "Deletion of created board for test")
+    @AfterMethod(description = "Delete created board for test")
     public void deleteBoardAfterTest() {
         // Delete new board
         API.TrelloResource.with()

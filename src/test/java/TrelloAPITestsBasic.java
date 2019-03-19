@@ -1,29 +1,26 @@
 import API.TrelloResource;
 import beans.board.Board;
-import enums.Responses;
 import io.restassured.response.Response;
-import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
 import static API.ResponseSpecifications.*;
-import static defaultTestData.BoardData.TEST_BOARD_NAME;
-import static defaultTestData.BoardData.TEST_BOARD_WRONG_ID;
+import static defaultTestName.BoardData.TEST_BOARD_NAME;
+import static defaultTestName.BoardData.TEST_BOARD_WRONG_ID;
 import static enums.Backgrounds.ORANGE;
 import static enums.QueryParams.DESC;
 import static enums.QueryParams.PREFS_BACKGROUND;
 import static enums.ResourceTypes.BOARD;
 import static enums.Responses.INVALID_ID;
-import static enums.Responses.INVALID_TOKEN;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 import static utils.DeserializeResponse.deserializeResponse;
 
 public class TrelloAPITestsBasic {
     @Test(description = "Test: 1-3. Create, Get, Delete for board. Test 4: Get for deleted board")
     public void createGetDeleteGetDeletedBoardTest() {
         int randomNumber = Integer.parseInt(random(5, false, true));
-        String description = defaultTestData.BoardData.TEST_BOARD_DESCRIPTION.text + randomNumber;
+        String description = defaultTestName.BoardData.TEST_BOARD_DESCRIPTION.text + randomNumber;
         String boardColor = ORANGE.color;
         String boardName = TEST_BOARD_NAME.text + randomNumber;
 

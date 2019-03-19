@@ -1,4 +1,4 @@
-package defaultTestData;
+package defaultTestName;
 
 public enum CardData {
     TEST_CARD_NAME("Test card "),

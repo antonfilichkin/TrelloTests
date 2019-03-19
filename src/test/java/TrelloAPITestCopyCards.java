@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static API.ResponseSpecifications.successResponse;
-import static defaultTestData.BoardData.TEST_BOARD_NAME_COPY;
-import static defaultTestData.CardData.TEST_CARD_DUE;
-import static defaultTestData.CardData.TEST_CARD_NAME;
-import static defaultTestData.ListData.TEST_LIST_COPY_NAME;
-import static defaultTestData.ListData.TEST_LIST_NAME;
+import static defaultTestName.BoardData.TEST_BOARD_NAME_COPY;
+import static defaultTestName.CardData.TEST_CARD_DUE;
+import static defaultTestName.CardData.TEST_CARD_NAME;
+import static defaultTestName.ListData.TEST_LIST_COPY_NAME;
+import static defaultTestName.ListData.TEST_LIST_NAME;
 import static enums.Positions.BOTTOM;
 import static enums.Positions.TOP;
 import static enums.QueryParams.*;

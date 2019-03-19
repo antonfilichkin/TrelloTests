@@ -3,7 +3,7 @@ import beans.board.Board;
 import beans.member.Member;
 import config.TestProperties;
 import io.restassured.response.Response;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
@@ -13,7 +13,8 @@ import static enums.QueryParams.*;
 import static enums.ResourceTypes.BOARD;
 import static enums.ResourceTypes.MEMBER;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
 import static utils.DeserializeResponse.deserializeResponse;
 
 public class TrelloAPITestsWithExistingBoards extends TrelloAPITestsBase {

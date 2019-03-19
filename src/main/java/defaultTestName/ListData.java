@@ -1,4 +1,4 @@
-package defaultTestData;
+package defaultTestName;
 
 public enum ListData {
     TEST_LIST_NAME("Test list"),

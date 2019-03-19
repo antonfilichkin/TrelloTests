@@ -1,4 +1,4 @@
-package defaultTestData;
+package defaultTestName;
 
 public enum BoardData {
     TEST_BOARD_NAME("Test board "),

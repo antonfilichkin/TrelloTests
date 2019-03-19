@@ -18,7 +18,7 @@ public class TestProperties {
     }
 
     private static Properties getAutProperties() {
-        try (InputStream in = TestProperties.class.getResourceAsStream(TEST_PROPERTY_FILE)){
+        try (InputStream in = TestProperties.class.getResourceAsStream(TEST_PROPERTY_FILE)) {
             autProperties.load(in);
         } catch (IOException e1) {
             e1.printStackTrace();

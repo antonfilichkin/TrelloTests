@@ -5,7 +5,7 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import static API.ResponseSpecifications.*;
-import static defaultTestData.BoardData.TEST_BOARD_NAME;
+import static defaultTestName.BoardData.TEST_BOARD_NAME;
 import static enums.ResourceTypes.BOARD;
 import static enums.ResourceTypes.MEMBER;
 import static enums.Responses.INVALID_TOKEN;
