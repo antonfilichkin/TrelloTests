@@ -8,7 +8,7 @@ import io.restassured.response.Response;
 import java.util.HashMap;
 import java.util.Map;
 
-import static API.RequestSpecifications.requestConfiguration;
+import static API.RequestSpecifications.*;
 import static config.TestProperties.getProperty;
 import static enums.QueryParams.*;
 
@@ -47,7 +47,7 @@ public class TrelloResource {
 
         public Response createResource(ResourceTypes type, String name) {
             return RestAssured
-                    .given(requestConfiguration())
+                    .given(requestSpecification())
                     .with()
                     .queryParam(NAME.queryParam, name)
                     .queryParams(this.resource.params)
@@ -58,7 +58,7 @@ public class TrelloResource {
 
         public Response getResource(ResourceTypes type, String id) {
             return RestAssured
-                    .given(requestConfiguration())
+                    .given(requestSpecification())
                     .with()
                     .queryParams(this.resource.params)
                     .log().all()
@@ -66,9 +66,19 @@ public class TrelloResource {
                     .prettyPeek();
         }
 
+        public Response getNestedResources(ResourceTypes parentType, String parentId, ResourceTypes type) {
+            return RestAssured
+                    .given(requestSpecification())
+                    .with()
+                    .queryParams(this.resource.params)
+                    .log().all()
+                    .get(BASE_URI + parentType.path + parentId + type.path)
+                    .prettyPeek();
+        }
+
         public Response updateResource(ResourceTypes type, String id) {
             return RestAssured
-                    .given(requestConfiguration())
+                    .given(requestSpecification())
                     .with()
                     .queryParams(this.resource.params)
                     .log().all()
@@ -78,15 +88,27 @@ public class TrelloResource {
 
         public Response deleteResource(ResourceTypes type, String id) {
             return RestAssured
-                    .given(requestConfiguration())
+                    .given(requestSpecification())
                     .with()
                     .log().all()
                     .delete(BASE_URI + type.path + id)
                     .prettyPeek();
         }
 
+        public Response createResourceUnauthorised(ResourceTypes type, String name) {
+            return RestAssured
+                    .given(requestSpecificationInvalidToken())
+                    .with()
+                    .queryParam(NAME.queryParam, name)
+                    .queryParams(this.resource.params)
+                    .log().all()
+                    .post(BASE_URI + type.path)
+                    .prettyPeek();
+        }
+
         public Response getResourceUnauthorised(ResourceTypes type, String id) {
             return RestAssured
+                    .given(requestSpecificationNoAuthentication())
                     .with()
                     .queryParams(this.resource.params)
                     .log().all()

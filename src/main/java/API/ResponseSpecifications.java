@@ -2,6 +2,9 @@ package API;
 
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
+import org.apache.http.HttpConnection;
+import org.apache.http.HttpHeaders;
+import org.apache.http.HttpMessage;
 import org.apache.http.HttpStatus;
 
 import static io.restassured.http.ContentType.JSON;
@@ -39,7 +42,16 @@ public class ResponseSpecifications {
     public static ResponseSpecification unauthorised() {
         return new ResponseSpecBuilder()
                 .expectContentType(TEXT)
-                .expectHeader("Connection", "keep-alive")
+                .expectHeader(HttpHeaders.CONNECTION, "keep-alive")
+                .expectResponseTime(lessThan(20000L))
+                .expectStatusCode(HttpStatus.SC_UNAUTHORIZED)
+                .build();
+    }
+
+    public static ResponseSpecification unauthorisedWrongToken() {
+        return new ResponseSpecBuilder()
+                .expectContentType(TEXT)
+                .expectHeader(HttpHeaders.CONNECTION, "close")
                 .expectResponseTime(lessThan(20000L))
                 .expectStatusCode(HttpStatus.SC_UNAUTHORIZED)
                 .build();

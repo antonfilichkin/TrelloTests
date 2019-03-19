@@ -14,10 +14,10 @@ import static enums.ResourceTypes.BOARD;
 import static enums.ResourceTypes.MEMBER;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static utils.utils.deserializeResponse;
+import static utils.DeserializeResponse.deserializeResponse;
 
-public class trelloAPITestsWithExistingBoards extends trelloAPITestsBase {
-    @Test(description = "Check if it is possible to update board")
+public class TrelloAPITestsWithExistingBoards extends TrelloAPITestsBase {
+    @Test(description = "Test 9: It is possible to update board")
     public void updateBoardTest() {
         Response response;
         Board board;
@@ -62,7 +62,7 @@ public class trelloAPITestsWithExistingBoards extends trelloAPITestsBase {
         assertThat(board.getPrefs().getBackground(), is(newBoardColor));
     }
 
-    @Test(description = "Check if it is possible to reopen closed board")
+    @Test(description = "Test 10: It is possible to reopen closed board")
     public void reopenClosedBoardTest() {
         Response response;
 

@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Trello Tests" parallel="methods" thread-count="1">
+    <test name="API Tests">
+        <classes>
+            <class name="TrelloAPITestsBasic"/>
+            <class name="TrelloAPITestsUnauthorised"/>
+            <class name="TrelloAPITestsWithExistingBoards"/>
+            <class name="TrelloAPITestCopyCards"/>
+        </classes>
+    </test>
+</suite>

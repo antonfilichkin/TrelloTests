@@ -1,26 +1,25 @@
-import API.TrelloResource;
 import beans.board.Board;
 import io.restassured.response.Response;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import static API.ResponseSpecifications.successResponse;
+import static defaultTestData.BoardData.TEST_BOARD_DESCRIPTION;
+import static defaultTestData.BoardData.TEST_BOARD_NAME;
 import static enums.Backgrounds.ORANGE;
 import static enums.QueryParams.DESC;
 import static enums.QueryParams.PREFS_BACKGROUND;
 import static enums.ResourceTypes.BOARD;
-import static enums.defaultTestData.Board.TEST_BOARD_DESCRIPTION;
-import static enums.defaultTestData.Board.TEST_BOARD_NAME;
 import static org.apache.commons.lang3.RandomStringUtils.random;
-import static utils.utils.deserializeResponse;
+import static utils.DeserializeResponse.deserializeResponse;
 
-public class trelloAPITestsBase {
+public class TrelloAPITestsBase {
     String description;
     String boardColor;
     String boardName;
     String boardId;
 
-    @BeforeMethod(description = "Creation of new board")
+    @BeforeMethod(description = "Creation of new board for test")
     public void createBoardForTest() {
         // Generating board Name and description
         int randomNumber = Integer.parseInt(random(5, false, true));
@@ -30,7 +29,8 @@ public class trelloAPITestsBase {
 
         Response response;
         // Create new board
-        response = TrelloResource.with()
+        response = API.TrelloResource
+                .with()
                 .addParam(DESC, description)
                 .addParam(PREFS_BACKGROUND, boardColor)
                 .createResource(BOARD, boardName);
@@ -41,29 +41,28 @@ public class trelloAPITestsBase {
         boardId = deserializeResponse(response, Board.class).getId();
     }
 
-    @AfterMethod(description = "Deletion of created board")
+    @AfterMethod(description = "Deletion of created board for test")
     public void deleteBoardAfterTest() {
         // Delete new board
-        TrelloResource.with()
+        API.TrelloResource.with()
                 .deleteResource(BOARD, boardId)
                 .then().specification(successResponse());
     }
 
+    // Create simple board
     static String createBoard(String name) {
-        Response response;
-        // Create new board
-        response = TrelloResource.with()
-                .createResource(BOARD, name);
+        Response response = API.TrelloResource.with().createResource(BOARD, name);
 
+        // Check board is created
         response.then().specification(successResponse());
 
-        // return created boardID
+        // Return created boardID
         return deserializeResponse(response, Board.class).getId();
     }
 
+    // Delete board
     static void deleteBoard(String id) {
-        // Delete new board
-        TrelloResource.with()
+        API.TrelloResource.with()
                 .deleteResource(BOARD, id)
                 .then().specification(successResponse());
     }

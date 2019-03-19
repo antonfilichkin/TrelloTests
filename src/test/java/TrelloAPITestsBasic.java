@@ -1,43 +1,29 @@
 import API.TrelloResource;
 import beans.board.Board;
+import enums.Responses;
 import io.restassured.response.Response;
+import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
 import static API.ResponseSpecifications.*;
+import static defaultTestData.BoardData.TEST_BOARD_NAME;
+import static defaultTestData.BoardData.TEST_BOARD_WRONG_ID;
 import static enums.Backgrounds.ORANGE;
 import static enums.QueryParams.DESC;
 import static enums.QueryParams.PREFS_BACKGROUND;
 import static enums.ResourceTypes.BOARD;
-import static enums.defaultTestData.Board.TEST_BOARD_DESCRIPTION;
-import static enums.defaultTestData.Board.TEST_BOARD_NAME;
+import static enums.Responses.INVALID_ID;
+import static enums.Responses.INVALID_TOKEN;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static utils.utils.deserializeResponse;
+import static org.hamcrest.Matchers.*;
+import static utils.DeserializeResponse.deserializeResponse;
 
-public class trelloAPITestsWithNoBoardExists {
-    @Test(description = "Testing that get board with wrong id - returns EC 400")
-    public void tryToModifyBoardThatNotExists() {
-        String boardId = "wrong_board_id";
-
-        Response response;
-
-        //GET created board
-        response = TrelloResource.with().getResource(BOARD, boardId);
-
-        //Assert response status is 400
-        response.then().specification(badRequest());
-
-        //Assert responce body is "invalid id"
-        assertThat(response.getBody().prettyPrint(), is("invalid id"));
-
-        System.out.println();
-    }
-
-    @Test(description = "Testing Create, Get and Delete for board")
-    public void createGetDeleteBoardTest() {
+public class TrelloAPITestsBasic {
+    @Test(description = "Test: 1-3. Create, Get, Delete for board. Test 4: Get for deleted board")
+    public void createGetDeleteGetDeletedBoardTest() {
         int randomNumber = Integer.parseInt(random(5, false, true));
-        String description = TEST_BOARD_DESCRIPTION.text + randomNumber;
+        String description = defaultTestData.BoardData.TEST_BOARD_DESCRIPTION.text + randomNumber;
         String boardColor = ORANGE.color;
         String boardName = TEST_BOARD_NAME.text + randomNumber;
 
@@ -80,5 +66,15 @@ public class trelloAPITestsWithNoBoardExists {
                 .getResource(BOARD, boardId)
                 .then()
                 .specification(resourceNotFound());
+    }
+
+    @Test(description = "Test 5: Get for board with wrong id - returns status 400")
+    public void modifyBoardThatNotExists() {
+        TrelloResource.with()
+                .getResource(BOARD, TEST_BOARD_WRONG_ID.text)
+                .then()
+                .specification(badRequest())
+                .assertThat()
+                .body(is(INVALID_ID.body));
     }
 }
